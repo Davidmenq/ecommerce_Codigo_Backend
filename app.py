@@ -7,6 +7,7 @@ from os import environ
 from dotenv import load_dotenv
 from models import *
 from flasgger import Swagger
+from urllib.parse import quote_plus
 # from controllers import (CategoriasController, 
 #                          RegistroController, 
 #                          LoginController, 
@@ -40,7 +41,15 @@ load_dotenv()
 # }
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']=environ.get('DATABASE_URL')
+
+if environ.get("PYTHON_VERSION"):
+    app.config['SQLALCHEMY_DATABASE_URI'] = environ.get("DATABASE_URL")
+else:    
+    passwordBd = environ.get("DATABASE_URL").split(":")[2].split("@localhost")[0]
+    passwordConvertida = quote_plus(passwordBd)
+    urlBd = environ.get("DATABASE_URL").replace(passwordBd, passwordConvertida)
+    #print(passwordBd)
+    app.config['SQLALCHEMY_DATABASE_URI'] = urlBd
 
 # servira para firmar las tokens
 # app.config['JWT_SECRET_KEY'] = environ.get('JWT_SECRET')
