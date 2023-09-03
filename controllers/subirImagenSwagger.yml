@@ -1,0 +1,21 @@
+tags:
+  - Imagen
+operationId: uploadImage
+description: Subir Imagen
+parameters:
+  - in: formData
+    type: file
+    name: imagen
+    
+    description: Imagen a subir al servidor
+
+security:
+  - Bearer: []
+  
+responses:
+  201:
+    schema:
+      properties:
+        message:
+          type: string
+          example: Imagen subida exitosamente

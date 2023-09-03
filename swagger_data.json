@@ -1,0 +1,75 @@
+{
+    "swagger": "2.0",
+    "info":{
+        "title": "Tienda de Cuchillos API",
+        "description": "API para controlar los productos de la tienda de cuchillos",
+        "contact": {
+            "responsibleDeveloper": "Eduardo de Rivero",
+            "email": "ederiveroman@gmail.com"
+        },
+        "version": "1.0"
+    },
+    "schemes": ["http", "https"],
+    "definitions": {
+        "Categoria":{
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "example": "1"
+                },
+                "nombre": {
+                    "type": "string",
+                    "example": "Lorem Ipsum"
+                },
+                "fechaCreacion":{
+                    "type": "string",
+                    "example": "2023-08-04T23:59:59"
+                },
+                "imagen":{
+                    "type": "string",
+                    "example": "https://google.com"
+                }
+
+            }
+        },
+        "Usuario": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "example": "1"
+                },
+                "nombre": {
+                    "type": "string",
+                    "example": "Lorem Ipsum"
+                },
+                "correo": {
+                    "type": "string",
+                    "example": "correo@correo.com"
+                },
+                "tipoUsuario": {
+                    "type": "string",
+                    "example": "ADMIN"
+                },
+                "birthday": {
+                    "type": "string",
+                    "example": "2020-01-08"
+                },
+                "fechaCreacion": {
+                    "type": "string",
+                    "example": "2020-01-08T23:59:59"
+                }
+            }
+        }
+    },
+    "securityDefinitions":{
+        "Bearer": {
+            "type": "apiKey",
+            "name": "authorization",
+            "in": "header",
+            "description": "Por favor, utilizar el siguiente formato: Bearer <YOUR_TOKEN>"
+        
+        }
+    }
+} 
