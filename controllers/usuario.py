@@ -6,14 +6,14 @@ from dtos import (UsuarioRequestDto,
 from bcrypt import gensalt, hashpw, checkpw
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
-class RegistroController(Resource):
+class RegistrosController(Resource):
     def post(self):
         # """
         # file: registroUsuarioSwagger.yml
         # """
-        print(request)
+        print(request.method)
         try:
-            dto =UsuarioRequestDto()
+            dto = UsuarioRequestDto()
             dataValidada = dto.load(request.get_json())
             print(dataValidada)
             # generar el hash de las password
@@ -39,6 +39,8 @@ class RegistroController(Resource):
             conexion.session.commit()
 
             dtoResponse = UsuarioResponseDto()
+            
+            print(dtoResponse)
 
             return {
                 'message': 'Usuario creado exitosamente',
@@ -49,7 +51,60 @@ class RegistroController(Resource):
                 'message': 'Error al crear el usuario',
                 'content': e.args
             },400
+
+    def get(self):
+        usuarios = conexion.session.query(UsuarioModel).all()
+        dto = UsuarioResponseDto()
+        resultado = dto.dump(usuarios, many=True)
+        return {
+            'content': resultado
+        }
+
+class RegistroController(Resource):
+    def put(self,id):
+        usuarioEncontrado = conexion.session.query(UsuarioModel).filter_by(id=id).first()
+
+        if not usuarioEncontrado:
+            return {
+                'message': 'El usuario no existe'
+            }, 404
         
+        data = request.get_json()
+        dto = UsuarioRequestDto()
+
+        try:
+            dataValidada = dto.load(data)
+            usuarioActualizado = conexion.session.query(UsuarioModel).filter_by(id=id).update(dataValidada)
+            conexion.session.commit()
+            return {
+                'message': 'Usuario actualizado exitosamente'
+            }
+        except Exception as e:
+            return {
+                'message': 'Error al actualizar el usuario',
+                'content': e.args
+            }
+    
+    def delete(self,id):
+        usuarioEncontrado = conexion.session.query(UsuarioModel).filter_by(id=id).first()
+
+        if not usuarioEncontrado:
+            return {
+                'message': 'El usuario a eliminar no existe'
+            },404
+        
+        try:
+            conexion.session.query(UsuarioModel).filter_by(id=id).delete()
+            conexion.session.commit()
+            return{
+                'message': 'Usuario eliminado exitosamente'
+            },201
+        except Exception as e:
+            return{
+                'message': 'Error al eliminar el usuario',
+                'content': e.args
+            }
+     
 
 # class LoginController(Resource):
 #     def post(self):
