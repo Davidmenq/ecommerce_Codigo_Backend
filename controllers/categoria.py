@@ -67,9 +67,7 @@ class CategoriasController(Resource):
         dto = CategoriaRequestDto()
         resultado =dto.dump(categorias, many=True)
 
-        return {
-            'content': resultado
-        },200
+        return resultado , 200
     
 class CategoriaController(Resource):    
     def get(self,id):
@@ -87,7 +85,7 @@ class CategoriaController(Resource):
         categoriaEncontrada = conexion.session.query(CategoriaModel).filter_by(id=id).first()
         if not categoriaEncontrada:
             return {
-                 'message': 'El usuario no existe'
+                 'message': 'La categoria no existe'
              }, 404
         data = request.get_json()
 
@@ -114,7 +112,7 @@ class CategoriaController(Resource):
         categoriaEncontrada = conexion.session.query(CategoriaModel).filter_by(id=id).first()
         if not categoriaEncontrada:
             return {
-                 'message': 'El usuario no existe'
+                 'message': 'La categoria no existe'
              }, 404
 
         try:

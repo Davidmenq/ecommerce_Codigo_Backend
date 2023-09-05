@@ -11,7 +11,7 @@ from controllers import (RegistroController ,
                          CategoriasController , 
                          ProductosController, 
                          SubirImagenController,
-                         DevolverImagenController,CategoriaController)
+                         DevolverImagenController,CategoriaController,ProductoController)
 
 from flask_jwt_extended import JWTManager
 # convierte un string en formato json a un diccionario
@@ -63,6 +63,7 @@ api.add_resource(RegistroController, '/registro')
 api.add_resource(SubirImagenController, '/subir-imagen')
 api.add_resource(DevolverImagenController, '/imagenes/<nombreImagen>')
 api.add_resource(ProductosController, '/productos')
+api.add_resource(ProductoController, '/productos/<int:id>')
 # api.add_resource(PedidosController, '/pedidos')
 # api.add_resource(UsuarioController, '/perfil')
 # api.add_resource(CambiarPasswordController, '/cambiar-password')
