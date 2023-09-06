@@ -7,8 +7,10 @@ from os import environ
 from dotenv import load_dotenv
 from models import *
 from flasgger import Swagger
-from controllers import (RegistroController , 
+from urllib.parse import quote_plus
+from controllers import (RegistrosController , 
                          CategoriasController , 
+                         RegistroController,
                          ProductosController, 
                          SubirImagenController,
                          DevolverImagenController,CategoriaController,ProductoController)
@@ -37,7 +39,15 @@ swaggerConfig = {
 }
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']=environ.get('DATABASE_URL')
+
+if environ.get("PYTHON_VERSION"):
+    app.config['SQLALCHEMY_DATABASE_URI'] = environ.get("DATABASE_URL")
+else:    
+    passwordBd = environ.get("DATABASE_URL").split(":")[2].split("@localhost")[0]
+    passwordConvertida = quote_plus(passwordBd)
+    urlBd = environ.get("DATABASE_URL").replace(passwordBd, passwordConvertida)
+    #print(passwordBd)
+    app.config['SQLALCHEMY_DATABASE_URI'] = urlBd
 
 # servira para firmar las tokens
 # app.config['JWT_SECRET_KEY'] = environ.get('JWT_SECRET')
@@ -58,7 +68,8 @@ Migrate(app, conexion)
 # rutas
 api.add_resource(CategoriasController, '/categorias')
 api.add_resource(CategoriaController, '/categoria/<int:id>')
-api.add_resource(RegistroController, '/registro')
+api.add_resource(RegistrosController, '/registro')
+api.add_resource(RegistroController, '/registro/<int:id>')
 # api.add_resource(LoginController, '/login')
 api.add_resource(SubirImagenController, '/subir-imagen')
 api.add_resource(DevolverImagenController, '/imagenes/<nombreImagen>')
