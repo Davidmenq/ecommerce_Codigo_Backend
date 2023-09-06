@@ -67,7 +67,7 @@ class ProductoController(Resource):
         categoriaEncontrada = conexion.session.query(ProductoModel).filter_by(id=id).first()
         if not categoriaEncontrada:
             return {
-                 'message': 'El usuario no existe'
+                 'message': 'El producto no existe'
              }, 404
         data = request.get_json()
 

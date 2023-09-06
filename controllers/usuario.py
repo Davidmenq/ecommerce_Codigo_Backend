@@ -2,7 +2,7 @@ from models import UsuarioModel
 from utilitarios import conexion
 from flask_restful import Resource, request
 from dtos import (UsuarioRequestDto, 
-                  UsuarioResponseDto)
+                  UsuarioResponseDto,LoginRequestDto)
 from bcrypt import gensalt, hashpw, checkpw
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
@@ -106,47 +106,47 @@ class RegistroController(Resource):
             }
      
 
-# class LoginController(Resource):
-#     def post(self):
-#         """
-#         file: loginSwagger.yml
-#         """
-#         dto = LoginRequestDto()
-#         try:
-#             print(request.get_json())
-#             dataValidada = dto.load(request.get_json())
-#             # busco si el usuario existe
-#             usuarioEncontrado = conexion.session.query(UsuarioModel).filter_by(correo = dataValidada.get('correo')).first()
+class LoginController(Resource):
+    def post(self):
+        """
+        file: loginSwagger.yml
+        """
+        dto = LoginRequestDto()
+        try:
+            print(request.get_json())
+            dataValidada = dto.load(request.get_json())
+            # busco si el usuario existe
+            usuarioEncontrado = conexion.session.query(UsuarioModel).filter_by(correo = dataValidada.get('correo')).first()
 
-#             if not usuarioEncontrado:
-#                 return {
-#                     'message': 'El usuario no existe'
-#                 }, 400
+            if not usuarioEncontrado:
+                return {
+                    'message': 'El usuario no existe'
+                }, 400
 
-#             password = bytes(usuarioEncontrado.password, 'utf-8')
-#             passwordEntrante = bytes(dataValidada.get('password'), 'utf-8')
+            password = bytes(usuarioEncontrado.password, 'utf-8')
+            passwordEntrante = bytes(dataValidada.get('password'), 'utf-8')
 
-#             # validara si es la password o no
-#             resultado = checkpw(passwordEntrante, password)
+            # validara si es la password o no
+            resultado = checkpw(passwordEntrante, password)
 
-#             if resultado == False:
-#                 return {
-#                     'message': 'Credenciales incorrectas'
-#                 },400
-            
-#             # identity > identificador para indicar a quien le pertenecera esta token
-#             token = create_access_token(identity= usuarioEncontrado.id)
+            if resultado == False:
+                return {
+                    'message': 'Credenciales incorrectas'
+                },400
 
-#             print(token)
-#             return {
-#                 'content': token
-#             }
+            # identity > identificador para indicar a quien le pertenecera esta token
+            token = create_access_token(identity= usuarioEncontrado.id)
 
-#         except Exception as e:
-#             return {
-#                 'message': 'Error al hacer el login',
-#                 'content': e.args
-#             },400
+            print(token)
+            return {
+                'content': token
+            }
+
+        except Exception as e:
+            return {
+                'message': 'Error al hacer el login',
+                'content': e.args
+            },400
         
 # class UsuarioController(Resource):
 
