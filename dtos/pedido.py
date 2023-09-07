@@ -3,7 +3,7 @@ from marshmallow import Schema, fields
 class DetallePedidoRequestDto(Schema):
     productoId = fields.Integer(required=True)
     cantidad = fields.Integer(required=True)
-    precio = fields.Float(required=True)
+    precio = fields.Float(required=False)
     
 
 class PedidoRequestDto(Schema):
