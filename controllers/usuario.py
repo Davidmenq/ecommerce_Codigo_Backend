@@ -2,9 +2,12 @@ from models import UsuarioModel
 from utilitarios import conexion
 from flask_restful import Resource, request
 from dtos import (UsuarioRequestDto, 
-                  UsuarioResponseDto,LoginRequestDto)
+                  UsuarioResponseDto,
+                  LoginRequestDto,
+                  CambiarPasswordRequestDto)
 from bcrypt import gensalt, hashpw, checkpw
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from mensajeria import cambiarPassword
 
 class RegistrosController(Resource):
     def post(self):
@@ -169,47 +172,36 @@ class LoginController(Resource):
 #             'content': dto.dump(usuarioEncontrado)
 #         }
 
-# class CambiarPasswordController(Resource):
-
-#     @jwt_required()
-#     def post(self):
-#         data = request.get_json()
-#         dto = CambiarPasswordRequestDto()
-#         identity = get_jwt_identity()
-#         try:
-#             dataValidada = dto.load(data)
-#             # buscar si el usuario existe si noexiste return un error
-#             usuarioEncontrado = conexion.session.query(UsuarioModel).filter_by(id = identity).first()
-
-#             if not usuarioEncontrado:
-#                 return {
-#                     'message': 'El usuario no existe'
-#                 }, 404
-#             # validar si la contrasena actual es la misma que el dataValidada.get('password')
-#             # NOTE: tienen que convertirlo a un byte
-#             password = bytes(dataValidada.get('password'),'utf-8')
-#             hashedPassword = bytes(usuarioEncontrado.password, 'utf-8')
-
-#             if checkpw(password, hashedPassword) == False:
-#                 return {
-#                     'message': 'No es la contraseña'
-#                 }, 400
-#             # hashear la nueva password y la van a guardar en el usuario actual
-#             nuevaPassword = bytes(dataValidada.get('nuevaPassword'), 'utf-8')
-
-#             salt = gensalt()
-#             hashNuevaPassword = hashpw(nuevaPassword, salt).decode('utf-8')
-
-#             usuarioEncontrado.password = hashNuevaPassword
-
-#             conexion.session.commit()
-            
-#             cambiarPassword(usuarioEncontrado.correo)
-#             return {
-#                 'message': 'Contraseña actualizada exitosamente'
-#             }
-#         except Exception as error:
-#             return {
-#                 'message': 'Error al actualizar la contraseña',
-#                 'content': error.args
-#             }
+class CambiarPasswordController(Resource):
+    @jwt_required()
+    def post(self):
+        data = request.get_json()
+        dto = CambiarPasswordRequestDto()
+        try:
+            dataValidada = dto.load(data)
+            identity = get_jwt_identity()
+            usuarioEncontrado = conexion.session.query(UsuarioModel).filter_by(id = identity).first()
+            if not usuarioEncontrado:
+                return {
+                    'message': 'El usuario no existe'
+                }, 404
+            password = bytes(dataValidada.get('password'), 'utf-8')
+            hashedPassword = bytes(usuarioEncontrado.password, 'utf-8')
+            if checkpw(password, hashedPassword) == False:
+                return {
+                    'message': 'La contraseña actual es incorrecta'
+                }, 400
+            nuevaPassword = bytes(dataValidada.get('nuevoPassword'), 'utf-8')
+            salt = gensalt()
+            hashNuevaPassword = hashpw(nuevaPassword, salt).decode('utf-8')
+            usuarioEncontrado.password = hashNuevaPassword
+            conexion.session.commit()
+            cambiarPassword(usuarioEncontrado.correo)
+            return {
+                'message': 'Contraseña actualizada exitosamente'
+            }
+        except Exception as e:
+            return {
+                'message': 'Error al cambiar la contraseña',
+                'content': e.args
+            }, 400
