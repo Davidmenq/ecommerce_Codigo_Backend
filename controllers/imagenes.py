@@ -10,7 +10,7 @@ class SubirImagenController(Resource):
     # si utilizamos el decorador personalizado y este se ubica en otra posicion del proyecto entonces tendremos que setear el archivo de swagger en la ubicacion de ese decorador
     def post(self):
         """
-        file: controllers/subirImagenSwagger.yml
+        file: subirImagenSwagger.yml
         """
         # path.join > sirve para unir varias carpetas y archivos en un formato que pueda ser legible por el sistema operativo
         # c:\\user\\eduardo > linux
