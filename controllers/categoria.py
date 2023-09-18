@@ -12,30 +12,7 @@ class CategoriasController(Resource):
     # @validador_usuario_admin
     def post(self):
         """
-        Creacion de una categoria
-        ---
-        operationId: post_categoria
-        description: Creacion de una nueva categoria con la imagen
-        tags:
-            - Categoria
-        parameters:
-            - in: body
-              name: body
-              schema:
-                properties:
-                    nombre:
-                        type: string
-                        example: 'Lorem'
-                    imagen:
-                        type: string
-                        example: 'https://www.google.com'
-        security:
-            -   Bearer: []
-        responses:
-            201:
-              description: Categoria creada exitosamente
-              schema:
-                 $ref: '#/definitions/Categoria'
+        file: postCategoria.yml
         """
         dto = CategoriaRequestDto()
         # identificador = get_jwt_identity()

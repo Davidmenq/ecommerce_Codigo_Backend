@@ -11,9 +11,9 @@ from mensajeria import cambiarPassword
 
 class RegistrosController(Resource):
     def post(self):
-        # """
-        # file: registroUsuarioSwagger.yml
-        # """
+        """
+        file: registroUsuarioSwagger.yml
+        """
         print(request.method)
         try:
             dto = UsuarioRequestDto()
