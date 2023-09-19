@@ -2,17 +2,17 @@ from flask_restful import Resource, request
 from models import CategoriaModel 
 from dtos import CategoriaRequestDto 
 from utilitarios import conexion
-# from decorators import validador_usuario_admin
+from decorators import validador_usuario_admin
 # get_jwt_identity > devolvera la identificacion del usuario de la token
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 class CategoriasController(Resource):
 
-    # @validador_usuario_admin
+    @validador_usuario_admin
     def post(self):
         """
-        file: ../documentacion/postCategoria.yml
+        file: documentacion/postCategoria.yml
         """
         dto = CategoriaRequestDto()
         # identificador = get_jwt_identity()

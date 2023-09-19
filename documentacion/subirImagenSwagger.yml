@@ -6,7 +6,6 @@ parameters:
   - in: formData
     type: file
     name: imagen
-    
     description: Imagen a subir al servidor
 
 security:
