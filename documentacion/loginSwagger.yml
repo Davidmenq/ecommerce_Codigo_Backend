@@ -1,0 +1,22 @@
+tags:
+  - Usuario
+operationId: login
+description: Login del usuario
+parameters:
+  - in: body
+    name: body
+    schema:
+      properties:
+          correo:
+              type: string
+              example: correo@correo.com
+          password:
+              type: string
+              example: '123456'
+responses:
+  200:
+    schema:
+      properties:
+        content:
+          type: string
+          example: xxxx.xxx.xxxx
