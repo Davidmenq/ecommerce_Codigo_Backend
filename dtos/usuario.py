@@ -18,3 +18,11 @@ class UsuarioResponseDto(SQLAlchemyAutoSchema):
 
     class Meta:
         model = UsuarioModel
+        
+class LoginRequestDto(Schema):
+    correo = fields.Email(required=True)
+    password = fields.Str(required=True)        
+
+class CambiarPasswordRequestDto(Schema):
+    password = fields.Str(required=True)
+    nuevoPassword = fields.Str(required=True)

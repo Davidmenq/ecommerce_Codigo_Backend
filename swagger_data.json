@@ -1,14 +1,19 @@
 {
     "swagger": "2.0",
     "info":{
-        "title": "Tienda de Cuchillos API",
-        "description": "API para controlar los productos de la tienda de cuchillos",
+        "title": "API Ecommerce Technology",
+        "description": "En esta API puede acceder a los endpoint del Ecommerce Technology, a la vez controlar los datos, loguearse a las rutas protejidas e interactuar con el backend",
         "contact": {
-            "responsibleDeveloper": "Eduardo de Rivero",
-            "email": "ederiveroman@gmail.com"
+            "name": "Equipo tecnico Ecommerce",
+            "responsibleDeveloper": "Estefano, Gonzalo, David",
+            "email": "technologyecommerce2@gmail.com"
         },
         "version": "1.0"
     },
+    "externalDocs": {
+        "description": "Mas acerca de la API Ecommerce",
+        "url": "https://github.com/Davidmenq/ecommerce_Codigo_Backend#readme"
+      },
     "schemes": ["http", "https"],
     "definitions": {
         "Categoria":{
@@ -20,7 +25,7 @@
                 },
                 "nombre": {
                     "type": "string",
-                    "example": "Lorem Ipsum"
+                    "example": "Perifericos"
                 },
                 "fechaCreacion":{
                     "type": "string",
@@ -42,7 +47,7 @@
                 },
                 "nombre": {
                     "type": "string",
-                    "example": "Lorem Ipsum"
+                    "example": "Usuario01"
                 },
                 "correo": {
                     "type": "string",
@@ -59,6 +64,60 @@
                 "fechaCreacion": {
                     "type": "string",
                     "example": "2020-01-08T23:59:59"
+                }
+            }
+        },
+        "Producto": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "example": "1"
+                },
+                "nombre": {
+                    "type": "string",
+                    "example": "teclado"
+                },
+                "descripcion": {
+                    "type": "string",
+                    "example": "descripcion del producto"
+                },
+                "precio": {
+                    "type": "number",
+                    "example": "30.50"
+                },
+                "imagenes": {
+                    "type": "array",
+                    "example": "[]"
+                },
+                "disponibilidad": {
+                    "type": "boolean",
+                    "example": "true"
+                },
+                "categoriaId": {
+                    "type": "integer",
+                    "example": "1"
+                }
+            }
+        },
+        "Pedido": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "example": "1"
+                },
+                "fechaCreacion": {
+                    "type": "string",
+                    "example": "2020-01-08T23:59:59"
+                },
+                "total": {
+                    "type": "number",
+                    "example": "150.50"
+                },
+                "usuarioId": {
+                    "type": "integer",
+                    "example": "1"
                 }
             }
         }

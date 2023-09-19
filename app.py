@@ -10,11 +10,17 @@ from flasgger import Swagger
 from urllib.parse import quote_plus
 from controllers import (RegistrosController , 
                          CategoriasController , 
+                         RegistroController,
                          ProductosController, 
                          SubirImagenController,
                          DevolverImagenController,
                          CategoriaController,
-                         RegistroController)
+                         ProductoController,
+                         PedidosController,
+                         LoginController, CambiarPasswordController,
+                         PedidosController, LoginController,UsuarioController)
+
+
 from flask_jwt_extended import JWTManager
 # convierte un string en formato json a un diccionario
 from json import load
@@ -50,11 +56,11 @@ else:
     app.config['SQLALCHEMY_DATABASE_URI'] = urlBd
 
 # servira para firmar las tokens
-# app.config['JWT_SECRET_KEY'] = environ.get('JWT_SECRET')
-# app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1, minutes=15)
+app.config['JWT_SECRET_KEY'] = environ.get('JWT_SECRET')
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1, minutes=15)
 
 
-# JWTManager(app)
+JWTManager(app)
 
 Swagger(app, template=swaggerData, config=swaggerConfig)
 # CORS > Cross Origin Resource Sharing (sirve para indicar quien puede tener acceso a mi API, indicando el dominio (origins), las cabeceras (allow_headers), y los metodos (methods))
@@ -70,13 +76,16 @@ api.add_resource(CategoriasController, '/categorias')
 api.add_resource(CategoriaController, '/categoria/<int:id>')
 api.add_resource(RegistrosController, '/registro')
 api.add_resource(RegistroController, '/registro/<int:id>')
-# api.add_resource(LoginController, '/login')
+api.add_resource(LoginController, '/login')
 api.add_resource(SubirImagenController, '/subir-imagen')
 api.add_resource(DevolverImagenController, '/imagenes/<nombreImagen>')
 api.add_resource(ProductosController, '/productos')
-# api.add_resource(PedidosController, '/pedidos')
-# api.add_resource(UsuarioController, '/perfil')
-# api.add_resource(CambiarPasswordController, '/cambiar-password')
+api.add_resource(ProductoController, '/productos/<int:id>')
+api.add_resource(PedidosController, '/pedidos')
+api.add_resource(CambiarPasswordController, '/cambiar-contrasena')
+api.add_resource(UsuarioController, '/perfil')
+#api.add_resource
+
 
 if __name__ == '__main__':
     app.run(debug=True)

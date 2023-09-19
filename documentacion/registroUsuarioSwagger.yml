@@ -1,0 +1,42 @@
+tags:
+  - Usuario
+operationId: registro
+description: Registro del usuario
+parameters:
+  - in: body
+    name: body
+    schema:
+      properties:
+          nombre:
+              type: string 
+              example: Gonzalo
+          apellido:
+              type: string 
+              example: Galdos
+          correo:
+              type: string
+              example: correo@correo.com
+          password:
+              type: string
+              example: '123456'
+          tipoUsuario:
+              type: string
+              enum:
+                - ADMIN
+                - USUARIO
+          birthday:
+              type: string
+              example: "2020-01-01"
+responses:
+  201:
+    schema:
+      properties:
+        content:
+          type: object
+          properties:
+            schema:
+              $ref: '#/definitions/Usuario'
+          
+        message:
+          type: string
+          example: Usuario creado exitosamente

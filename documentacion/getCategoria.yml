@@ -1,0 +1,14 @@
+tags:
+  - Categoria
+operationId: getCategoria
+description: Lista todas las categorias
+summary: Devolver las categorias
+responses:
+  200:
+    description: Las Categorias
+    schema:
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/definitions/Categoria'

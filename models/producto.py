@@ -9,7 +9,7 @@ class ProductoModel(conexion.Model):
     nombre = Column(type_=types.Text, nullable=False)
     descripcion = Column(type_=types.Text)
     precio = Column(type_=types.Float, nullable=False)
-    imagen = Column(type_=types.Text)
+    imagenes = Column(type_=types.ARRAY(types.Text)) 
     disponibilidad = Column(type_=types.Boolean, default=True)
     stock = Column(type_=types.Integer, nullable=False)
     categoriaId = Column(ForeignKey(column='categorias.id'), type_=types.Integer

@@ -12,30 +12,7 @@ class CategoriasController(Resource):
     # @validador_usuario_admin
     def post(self):
         """
-        Creacion de una categoria
-        ---
-        operationId: post_categoria
-        description: Creacion de una nueva categoria con la imagen
-        tags:
-            - Categoria
-        parameters:
-            - in: body
-              name: body
-              schema:
-                properties:
-                    nombre:
-                        type: string
-                        example: 'Lorem'
-                    imagen:
-                        type: string
-                        example: 'https://www.google.com'
-        security:
-            -   Bearer: []
-        responses:
-            201:
-              description: Categoria creada exitosamente
-              schema:
-                 $ref: '#/definitions/Categoria'
+        file: ../documentacion/postCategoria.yml
         """
         dto = CategoriaRequestDto()
         # identificador = get_jwt_identity()
@@ -61,15 +38,13 @@ class CategoriasController(Resource):
 
     def get(self):
         """
-        file: getCategoria.yml
+        file: ../documentacion/getCategoria.yml
         """
         categorias = conexion.session.query(CategoriaModel).all()
         dto = CategoriaRequestDto()
         resultado =dto.dump(categorias, many=True)
 
-        return {
-            'content': resultado
-        },200
+        return resultado , 200
     
 class CategoriaController(Resource):    
     def get(self,id):
@@ -87,7 +62,7 @@ class CategoriaController(Resource):
         categoriaEncontrada = conexion.session.query(CategoriaModel).filter_by(id=id).first()
         if not categoriaEncontrada:
             return {
-                 'message': 'El usuario no existe'
+                 'message': 'La categoria no existe'
              }, 404
         data = request.get_json()
 
@@ -114,7 +89,7 @@ class CategoriaController(Resource):
         categoriaEncontrada = conexion.session.query(CategoriaModel).filter_by(id=id).first()
         if not categoriaEncontrada:
             return {
-                 'message': 'El usuario no existe'
+                 'message': 'La categoria no existe'
              }, 404
 
         try:
