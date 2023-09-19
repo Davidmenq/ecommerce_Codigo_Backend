@@ -59,9 +59,8 @@ class RegistrosController(Resource):
         usuarios = conexion.session.query(UsuarioModel).all()
         dto = UsuarioResponseDto()
         resultado = dto.dump(usuarios, many=True)
-        return {
-            'content': resultado
-        }
+        return resultado
+    
 
 class RegistroController(Resource):
     def put(self,id):
@@ -150,27 +149,26 @@ class LoginController(Resource):
                 'message': 'Error al hacer el login',
                 'content': e.args
             },400
-        
-# class UsuarioController(Resource):
+class UsuarioController(Resource):
 
-#     # obliga a que para ingresar a este metodo se tenga que proveer una token por el header de authorization
-#     @jwt_required()
-#     def get(self):
-#         # extraer del payload de la jwt el identity que es a quien le pertenece esta token
-#         identity = get_jwt_identity()
+    # obliga a que para ingresar a este metodo se tenga que proveer una token por el header de authorization
+    @jwt_required()
+    def get(self):
+        # extraer del payload de la jwt el identity que es a quien le pertenece esta token
+        identity = get_jwt_identity()
 
-#         usuarioEncontrado = conexion.session.query(UsuarioModel).filter_by(id = identity).first()
+        usuarioEncontrado = conexion.session.query(UsuarioModel).filter_by(id = identity).first()
 
-#         if not usuarioEncontrado:
-#             return {
-#                 'message': 'El usuario no existe'
-#             }, 404
+        if not usuarioEncontrado:
+            return {
+                'message': 'El usuario no existe'
+            }, 404
         
-#         dto = UsuarioResponseDto()
+        dto = UsuarioResponseDto()
         
-#         return{
-#             'content': dto.dump(usuarioEncontrado)
-#         }
+        return dto.dump(usuarioEncontrado)
+           
+        
 
 class CambiarPasswordController(Resource):
     @jwt_required()

@@ -17,7 +17,9 @@ from controllers import (RegistrosController ,
                          CategoriaController,
                          ProductoController,
                          PedidosController,
-                         LoginController, CambiarPasswordController)
+                         LoginController, CambiarPasswordController,
+                         PedidosController, LoginController,UsuarioController)
+
 
 from flask_jwt_extended import JWTManager
 # convierte un string en formato json a un diccionario
@@ -81,7 +83,8 @@ api.add_resource(ProductosController, '/productos')
 api.add_resource(ProductoController, '/productos/<int:id>')
 api.add_resource(PedidosController, '/pedidos')
 api.add_resource(CambiarPasswordController, '/cambiar-contrasena')
-# api.add_resource(UsuarioController, '/perfil')
+api.add_resource(UsuarioController, '/perfil')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
