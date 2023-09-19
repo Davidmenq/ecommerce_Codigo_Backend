@@ -12,7 +12,7 @@ class CategoriasController(Resource):
     # @validador_usuario_admin
     def post(self):
         """
-        file: postCategoria.yml
+        file: ../documentacion/postCategoria.yml
         """
         dto = CategoriaRequestDto()
         # identificador = get_jwt_identity()
@@ -38,7 +38,7 @@ class CategoriasController(Resource):
 
     def get(self):
         """
-        file: getCategoria.yml
+        file: ../documentacion/getCategoria.yml
         """
         categorias = conexion.session.query(CategoriaModel).all()
         dto = CategoriaRequestDto()

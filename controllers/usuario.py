@@ -12,7 +12,7 @@ from mensajeria import cambiarPassword
 class RegistrosController(Resource):
     def post(self):
         """
-        file: registroUsuarioSwagger.yml
+        file: ../documentacion/registroUsuarioSwagger.yml
         """
         print(request.method)
         try:
@@ -112,7 +112,7 @@ class RegistroController(Resource):
 class LoginController(Resource):
     def post(self):
         """
-        file: loginSwagger.yml
+        file: ../documentacion/loginSwagger.yml
         """
         dto = LoginRequestDto()
         try:
