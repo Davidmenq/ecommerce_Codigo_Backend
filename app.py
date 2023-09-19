@@ -84,6 +84,7 @@ api.add_resource(ProductoController, '/productos/<int:id>')
 api.add_resource(PedidosController, '/pedidos')
 api.add_resource(CambiarPasswordController, '/cambiar-contrasena')
 api.add_resource(UsuarioController, '/perfil')
+#api.add_resource
 
 
 if __name__ == '__main__':
