@@ -169,42 +169,6 @@ class UsuarioController(Resource):
         return dto.dump(usuarioEncontrado)
            
         
-        data = request.get_json()
-        dto = UsuarioRequestDto()
-
-        try:
-            dataValidada = dto.load(data)
-            usuarioActualizado = conexion.session.query(UsuarioModel).filter_by(id=id).update(dataValidada)
-            conexion.session.commit()
-            return {
-                'message': 'Usuario actualizado exitosamente'
-            }
-        except Exception as e:
-            return {
-                'message': 'Error al actualizar el usuario',
-                'content': e.args
-            }
-    
-    def delete(self,id):
-        usuarioEncontrado = conexion.session.query(UsuarioModel).filter_by(id=id).first()
-
-        if not usuarioEncontrado:
-            return {
-                'message': 'El usuario a eliminar no existe'
-            },404
-        
-        try:
-            conexion.session.query(UsuarioModel).filter_by(id=id).delete()
-            conexion.session.commit()
-            return{
-                'message': 'Usuario eliminado exitosamente'
-            },201
-        except Exception as e:
-            return{
-                'message': 'Error al eliminar el usuario',
-                'content': e.args
-            }
-     
 
 class CambiarPasswordController(Resource):
     @jwt_required()
