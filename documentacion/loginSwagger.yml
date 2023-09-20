@@ -1,5 +1,6 @@
 tags:
   - Usuario
+summary: Obtener token
 operationId: login
 description: Login del usuario
 parameters:

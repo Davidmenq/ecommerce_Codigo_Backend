@@ -18,8 +18,8 @@ parameters:
                 imagen:
                     type: string
                     example: 'https://www.google.com'
-# security:
-#     -   Bearer: []
+security:
+    -   Bearer: []
 responses:
     200:
         description: Categoria actualizada exitosamente

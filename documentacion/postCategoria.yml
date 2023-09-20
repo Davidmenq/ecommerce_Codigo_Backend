@@ -1,5 +1,6 @@
 tags:
     -   Categoria
+summary: Crea una nueva categoría
 operationId: post_categoria
 description: Creacion de una nueva categoria con la imagen
 parameters:

@@ -30,8 +30,8 @@ def validador_usuario_admin(funcion):
                 'El usuario no tiene los permisos suficientes')
 
         # si la validacion es exitosa lo dejare pasar a la funcion que viene despues del decorador
-        return funcion(*args, *kwargs)
-
+        return funcion(*args, **kwargs)
+    
     return wrapper
 
 

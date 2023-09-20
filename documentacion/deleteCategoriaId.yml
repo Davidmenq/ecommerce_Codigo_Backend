@@ -9,8 +9,8 @@ parameters:
         description: "ID de la categoria"
         required: true
 
-# security:
-#   -   Bearer: []
+security:
+  -   Bearer: []
 responses:
     200:
         description: Categoria eliminada exitosamente

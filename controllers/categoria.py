@@ -63,11 +63,12 @@ class CategoriaController(Resource):
 
         return categoria
     
-    #@validador_usuario_admin
+    @validador_usuario_admin
     def put(self,id):
         """
-        file: ../documentacion/putCategoriaId.yml
+        file: documentacion/putCategoriaId.yml
         """
+        print(f'Imprime el parametro ID y su tipo: {id} {type(id)}')
         categoriaEncontrada = conexion.session.query(CategoriaModel).filter_by(id=id).first()
         print(categoriaEncontrada)
         if not categoriaEncontrada:
@@ -96,10 +97,10 @@ class CategoriaController(Resource):
                 'content': error.args
             }  
     
-    #@validador_usuario_admin
+    @validador_usuario_admin
     def delete(self,id):
         """
-        file: ../documentacion/deleteCategoriaId.yml
+        file: documentacion/deleteCategoriaId.yml
         """
         categoriaEncontrada = conexion.session.query(CategoriaModel).filter_by(id=id).first()
         if not categoriaEncontrada:

@@ -1,5 +1,6 @@
 tags:
   - Usuario
+summary: Crea un nuevo usuario
 operationId: registro
 description: Registro del usuario
 parameters:
@@ -27,6 +28,7 @@ parameters:
           birthday:
               type: string
               example: "2020-01-01"
+              
 responses:
   201:
     schema:
