@@ -1,0 +1,29 @@
+tags:
+- "Categoria"
+summary: "Actualiza una categoria existente"
+description: "Actualiza una categoria existente indicando el ID mas los valores ha actualizar"
+operationId: "putCategoriaId"
+parameters:
+- in: "path"
+  name: "id"
+  description: "ID de la categoria"
+  required: true
+
+
+- in: body
+  name: body
+  schema:
+    properties:
+        nombre:
+            type: string
+            example: 'Lorem'
+        imagen:
+            type: string
+            example: 'https://www.google.com'
+# security:
+#   -   Bearer: []
+responses:
+  200:
+    description: Categoria actualizada exitosamente
+    schema:
+        $ref: '#/definitions/Categoria'

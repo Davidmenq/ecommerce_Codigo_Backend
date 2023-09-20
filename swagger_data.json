@@ -21,7 +21,7 @@
             "properties": {
                 "id": {
                     "type": "integer",
-                    "example": "1"
+                    "example": 1
                 },
                 "nombre": {
                     "type": "string",

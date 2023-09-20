@@ -1,0 +1,20 @@
+tags:
+- "Categoria"
+summary: "Devuelve una categoria"
+description: "Devuelve la categoria del ID especificado"
+operationId: "getCategoriaId"
+parameters:
+- in: "path"
+  name: "id"
+  required: true
+  type: integer
+  schema:
+    type: string
+responses:
+  200:
+    schema:
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/definitions/Categoria'
