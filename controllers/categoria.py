@@ -69,7 +69,7 @@ class CategoriaController(Resource):
         file: ../documentacion/putCategoriaId.yml
         """
         categoriaEncontrada = conexion.session.query(CategoriaModel).filter_by(id=id).first()
-
+        print(categoriaEncontrada)
         if not categoriaEncontrada:
             return {
                  'message': 'La categoria no existe'

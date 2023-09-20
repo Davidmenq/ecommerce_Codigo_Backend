@@ -35,6 +35,7 @@ def validador_usuario_admin(funcion):
     return wrapper
 
 
+
 def validador_usuario_cliente(funcion):
     @wraps(funcion)
     def wrapper(*args, **kwargs):
