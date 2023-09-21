@@ -48,9 +48,8 @@ class PedidosController(Resource):
                         subTotal=sub_total,
                         pedidoId=nuevoPedido.id
                     )
-                    
-                    # Agregar el detalle a la base de datos
                     conexion.session.add(nuevoDetallePedido)
+                    # conexion.session.add(stockActualizado)
                 else:
                     # Manejar el caso en el que no se encuentra el producto en la base de datos
                     # Puedes agregar una lógica para manejar esto según tus necesidades
@@ -58,11 +57,16 @@ class PedidosController(Resource):
                 
                                                                 
                 # TODO: luego de agregar el detalle de pedido, disminuir el stock de ese producto
+                nuevoStock = producto.stock - cantidad 
+                producto.stock = nuevoStock
+                
 
+                    # Agregar el detalle a la base de datos
                 # extraigo sus totales
                 total += nuevoDetallePedido.subTotal
                 # total = total + nuevoDetallePedido.subTotal
-                conexion.session.add(nuevoDetallePedido)
+                
+                conexion.session.commit()
             
             # modifico el total general de mi pedido con la sumatorio de mis detalles
             nuevoPedido.total = total
