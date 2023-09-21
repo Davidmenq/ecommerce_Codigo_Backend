@@ -8,7 +8,6 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 class CategoriasController(Resource):
-
     @validador_usuario_admin
     def post(self):
         """
@@ -46,11 +45,12 @@ class CategoriasController(Resource):
 
         return resultado , 200
     
-class CategoriaController(Resource):    
+class CategoriaController(Resource):   
     
+    @validador_usuario_admin
     def get(self,id):
         """
-        file: ../documentacion/getCategoriaId.yml
+        file: documentacion/getCategoriaId.yml
         """
         categoriaEncontrada = conexion.session.query(CategoriaModel).filter_by(id=id).first()
         
