@@ -18,7 +18,7 @@ from controllers import (RegistrosController ,
                          ProductoController,
                          PedidosController,
                          LoginController, CambiarPasswordController,
-                         PedidosController, LoginController,UsuarioController)
+                         PedidosController,UsuarioController)
 
 
 from flask_jwt_extended import JWTManager
