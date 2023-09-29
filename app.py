@@ -18,7 +18,7 @@ from controllers import (RegistrosController ,
                          ProductoController,
                          PedidosController,
                          LoginController, CambiarPasswordController,
-                         PedidosController, LoginController,UsuarioController)
+                         PedidosController,UsuarioController)
 
 
 from flask_jwt_extended import JWTManager
@@ -72,7 +72,7 @@ conexion.init_app(app)
 Migrate(app, conexion)
 
 # rutas
-api.add_resource(CategoriasController, '/categorias')
+api.add_resource(CategoriasController, '/categorias') 
 api.add_resource(CategoriaController, '/categoria/<int:id>')
 api.add_resource(RegistrosController, '/registro')
 api.add_resource(RegistroController, '/registro/<int:id>')

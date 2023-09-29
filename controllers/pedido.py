@@ -9,77 +9,69 @@ class PedidosController(Resource):
 
     @validador_usuario_cliente
     def post(self):
-        data =request.get_json()
+        data = request.get_json()
         try:
             dto = PedidoRequestDto()
             dataValidada = dto.load(data)
             usuarioId = get_jwt_identity()
-            
-            # TODO: buscar si existe esos productos en la base de datos
 
-            # TODO: validar si hay stock suficiente para crear el pedido de ese producto 
-
-
-            # primero creamos nuestro nuevo pedido
-            nuevoPedido = PedidoModel(usuarioId = usuarioId, total = 0.0)
-
-            conexion.session.add(nuevoPedido)
-            conexion.session.commit()
             detallePedidos = dataValidada.get('detallePedido')
+
+            # Verificar si hay suficiente stock para todos los productos en el detalle
+            for detallePedido in detallePedidos:
+                producto_id = detallePedido.get('productoId')
+                cantidad = detallePedido.get('cantidad')
+                producto = ProductoModel.query.filter_by(id=producto_id).first()
+
+                if not producto or cantidad > producto.stock:
+                    # No hay suficiente stock para este producto o el producto no existe
+                    return {
+                        'message': f'No hay suficiente stock para el producto con ID {producto_id} eliminalo para poder continuar con el pedido'
+                    },400
+
+            # Si llegamos aquí, significa que hay suficiente stock para todos los productos
+            # Creamos un nuevo pedido
+            nuevoPedido = PedidoModel(usuarioId=usuarioId, total=0.0)
+            conexion.session.add(nuevoPedido)
 
             total = 0.0
 
             for detallePedido in detallePedidos:
                 producto_id = detallePedido.get('productoId')
                 cantidad = detallePedido.get('cantidad')
-                
-                # Consultar la tabla de productos para obtener el precio
                 producto = ProductoModel.query.filter_by(id=producto_id).first()
-                
-                if producto:
-                    precio = producto.precio
-                    sub_total = cantidad * precio
-                    
-                    # Crear un nuevo detalle de pedido con el precio calculado
-                    nuevoDetallePedido = DetallePedidoModel(
-                        productoId=producto_id,
-                        cantidad=cantidad,
-                        precio=precio,
-                        subTotal=sub_total,
-                        pedidoId=nuevoPedido.id
-                    )
-                    conexion.session.add(nuevoDetallePedido)
-                    # conexion.session.add(stockActualizado)
-                else:
-                    # Manejar el caso en el que no se encuentra el producto en la base de datos
-                    # Puedes agregar una lógica para manejar esto según tus necesidades
-                    pass
-                
-                                                                
-                # TODO: luego de agregar el detalle de pedido, disminuir el stock de ese producto
-                nuevoStock = producto.stock - cantidad 
-                producto.stock = nuevoStock
-                
 
-                    # Agregar el detalle a la base de datos
-                # extraigo sus totales
+                precio = producto.precio
+                sub_total = cantidad * precio
+
+                # Crear un nuevo detalle de pedido con el precio calculado
+                nuevoDetallePedido = DetallePedidoModel(
+                    productoId=producto_id,
+                    cantidad=cantidad,
+                    precio=precio,
+                    subTotal=sub_total,
+                    pedidoId=nuevoPedido.id
+                )
+                conexion.session.add(nuevoDetallePedido)
+
+                # Actualizar el stock del producto
+                nuevoStock = producto.stock - cantidad
+                producto.stock = nuevoStock
+
+                # Actualizar el total del pedido
                 total += nuevoDetallePedido.subTotal
-                # total = total + nuevoDetallePedido.subTotal
-                
-                conexion.session.commit()
-            
-            # modifico el total general de mi pedido con la sumatorio de mis detalles
+
+            # Actualizar el total general de mi pedido con la sumatoria de los detalles
             nuevoPedido.total = total
-            
             conexion.session.commit()
-            
+
             return {
                 'message': 'Pedido creado correctamente'
-            },201
+            }, 201
 
         except Exception as error:
             conexion.session.rollback()
-            
+
             return {
                 'message': 'Error al crear el pedido',
                 'content': error.args
