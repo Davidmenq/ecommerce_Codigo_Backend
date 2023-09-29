@@ -6,7 +6,7 @@ operationId: "putProductoId"
 parameters:
     -   in: "path"
         name: "id"
-        description: "ID de la categoria"
+        description: "ID del producto"
         required: true
     -   in: body
         name: body

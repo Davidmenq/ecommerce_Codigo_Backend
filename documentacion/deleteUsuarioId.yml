@@ -1,0 +1,16 @@
+tags:
+    -   "Usuario"
+summary: "Elimina un usuario existente"
+description: "Elimina un usuario existente indicando el ID"
+operationId: "deleteUsuarioId"
+parameters:
+    -   in: "path"
+        name: "id"
+        description: "ID del Usuario"
+        required: true
+
+security:
+  -   Bearer: []
+responses:
+    200:
+        description: Usuario eliminada exitosamente

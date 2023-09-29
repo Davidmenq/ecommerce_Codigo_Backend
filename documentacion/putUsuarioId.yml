@@ -1,0 +1,42 @@
+tags:
+    -   "Usuario"
+summary: "Actualiza un Usuario existente"
+description: "Actualiza un Usuario existente indicando el ID mas los valores ha actualizar"
+operationId: "putUsuarioId"
+parameters:
+    -   in: "path"
+        name: "id"
+        description: "ID del usuario"
+        required: true
+    -   in: body
+        name: body
+        schema:
+            properties:
+                nombre:
+                    type: string 
+                    example: Gonzalo
+                apellido:
+                    type: string 
+                    example: Galdos
+                correo:
+                    type: string
+                    example: correo@correo.com
+                password:
+                    type: string
+                    example: '123456'
+                tipoUsuario:
+                    type: string
+                    enum:
+                      - ADMIN
+                      - USUARIO
+                birthday:
+                    type: string
+                    example: "2020-01-01"
+
+security:
+    -   Bearer: []
+responses:
+    200:
+        description: Usuario actualizado exitosamente
+        schema:
+            $ref: '#/definitions/Usuario'

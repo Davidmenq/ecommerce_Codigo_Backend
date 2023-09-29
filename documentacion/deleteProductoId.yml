@@ -6,7 +6,7 @@ operationId: "deleteProductoId"
 parameters:
     -   in: "path"
         name: "id"
-        description: "ID de la categoria"
+        description: "ID del Producto"
         required: true
 
 security:

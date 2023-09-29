@@ -66,7 +66,11 @@ class RegistrosController(Resource):
     
 
 class RegistroController(Resource):
+    @validador_usuario_admin
     def put(self,id):
+        """
+        file: documentacion/putUsuarioId.yml
+        """
         usuarioEncontrado = conexion.session.query(UsuarioModel).filter_by(id=id).first()
 
         if not usuarioEncontrado:
@@ -90,7 +94,11 @@ class RegistroController(Resource):
                 'content': e.args
             }
     
+    @validador_usuario_admin
     def delete(self,id):
+        """
+        file: documentacion/deleteUsuarioId.yml
+        """
         usuarioEncontrado = conexion.session.query(UsuarioModel).filter_by(id=id).first()
 
         if not usuarioEncontrado:
