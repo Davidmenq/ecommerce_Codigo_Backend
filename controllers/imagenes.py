@@ -8,7 +8,7 @@ from flask import send_file
 class SubirImagenController(Resource):
 
     # si utilizamos el decorador personalizado y este se ubica en otra posicion del proyecto entonces tendremos que setear el archivo de swagger en la ubicacion de ese decorador
-    @validador_usuario_admin
+    # @validador_usuario_admin
     def post(self):
         """
         file: documentacion/subirImagenSwagger.yml
