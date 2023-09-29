@@ -8,7 +8,7 @@ from dtos import (UsuarioRequestDto,
 from bcrypt import gensalt, hashpw, checkpw
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from mensajeria import cambiarPassword
-from decorators import validador_usuario_admin
+from decorators import validador_usuario_admin, validador_usuario_logueado
 
 class RegistrosController(Resource):
     @validador_usuario_admin
@@ -174,8 +174,12 @@ class UsuarioController(Resource):
         
 
 class CambiarPasswordController(Resource):
+    @validador_usuario_logueado
     @jwt_required()
     def post(self):
+        """
+        file: documentacion/cambiarPasswordSwagger.yml
+        """
         data = request.get_json()
         dto = CambiarPasswordRequestDto()
         try:

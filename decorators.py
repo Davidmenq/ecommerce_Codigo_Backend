@@ -56,3 +56,20 @@ def validador_usuario_cliente(funcion):
         return funcion(*args, **kwargs)
 
     return wrapper
+
+def validador_usuario_logueado(funcion):
+    @wraps(funcion)
+    def wrapper(*args, **kwargs):
+        data = verify_jwt_in_request()
+
+        id = data[1].get('sub')
+
+        usuarioEncontrado = conexion.session.query(
+            UsuarioModel).filter_by(id=id).first()
+
+        if not usuarioEncontrado:
+            raise NoAuthorizationError('El usuario no existe')
+
+        return funcion(*args, **kwargs)
+
+    return wrapper
