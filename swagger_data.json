@@ -97,6 +97,10 @@
                 "categoriaId": {
                     "type": "integer",
                     "example": "1"
+                },
+                "stock": {
+                    "type": "integer",
+                    "example": "10"
                 }
             }
         },

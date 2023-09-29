@@ -28,7 +28,8 @@ parameters:
           birthday:
               type: string
               example: "2020-01-01"
-              
+security:
+  - Bearer: []             
 responses:
   201:
     schema:

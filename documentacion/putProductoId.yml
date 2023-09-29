@@ -1,0 +1,42 @@
+tags:
+    -   "Producto"
+summary: "Actualiza un producto existente"
+description: "Actualiza un producto existente indicando el ID mas los valores ha actualizar"
+operationId: "putProductoId"
+parameters:
+    -   in: "path"
+        name: "id"
+        description: "ID de la categoria"
+        required: true
+    -   in: body
+        name: body
+        schema:
+            properties:
+                nombre:
+                    type: string
+                    example: 'Lorem'
+                imagenes:
+                    type: array
+                    example: ['https://www.google.com', 'https://www.google.com']
+                categoriaId: 
+                    type: integer
+                    example: 1
+                descripcion:
+                    type: string
+                    example: Este es el detalle del producto
+                disponibilidad:
+                    type: boolean
+                    example: true
+                precio:
+                    type: number
+                    example: 30.50
+                stock:
+                    type: integer
+                    example: 10
+security:
+    -   Bearer: []
+responses:
+    200:
+        description: Producto actualizado exitosamente
+        schema:
+            $ref: '#/definitions/Producto'

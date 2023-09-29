@@ -53,6 +53,6 @@ def validador_usuario_cliente(funcion):
             raise NoAuthorizationError(
                 'El usuario no tiene los permisos suficientes')
 
-        return funcion(*args, *kwargs)
+        return funcion(*args, **kwargs)
 
     return wrapper

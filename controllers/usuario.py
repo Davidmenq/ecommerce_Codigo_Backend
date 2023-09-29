@@ -8,11 +8,13 @@ from dtos import (UsuarioRequestDto,
 from bcrypt import gensalt, hashpw, checkpw
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from mensajeria import cambiarPassword
+from decorators import validador_usuario_admin
 
 class RegistrosController(Resource):
+    @validador_usuario_admin
     def post(self):
         """
-        file: ../documentacion/registroUsuarioSwagger.yml
+        file: documentacion/registroUsuarioSwagger.yml
         """
         print(request.method)
         try:
@@ -55,6 +57,7 @@ class RegistrosController(Resource):
                 'content': e.args
             },400
 
+    
     def get(self):
         usuarios = conexion.session.query(UsuarioModel).all()
         dto = UsuarioResponseDto()
