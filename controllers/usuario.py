@@ -11,10 +11,10 @@ from mensajeria import cambiarPassword
 from decorators import validador_usuario_admin, validador_usuario_logueado
 
 class RegistrosController(Resource):
-    @validador_usuario_admin
+    
     def post(self):
         """
-        file: documentacion/registroUsuarioSwagger.yml
+        file: ../documentacion/registroUsuarioSwagger.yml
         """
         print(request.method)
         try:
