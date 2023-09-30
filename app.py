@@ -56,7 +56,8 @@ else:
     app.config['SQLALCHEMY_DATABASE_URI'] = urlBd
 
 # servira para firmar las tokens
-app.config['JWT_SECRET_KEY'] = environ.get('JWT_SECRET')
+app.config['JWT_SECRET_KEY'] = "muysecreto"
+app.config["JWT_ALGORITHM"] = "HS256"
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1, minutes=15)
 
 

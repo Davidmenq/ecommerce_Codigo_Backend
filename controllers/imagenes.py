@@ -49,7 +49,7 @@ class SubirImagenController(Resource):
         return {
             'message': 'Imagen subida exitosamente',
             'content': {
-                'imagen': f'http://localhost:5000/imagenes/{filename}' 
+                'imagen': f'https://ecommerce-api-backend-nlld.onrender.com/imagenes/{filename}' 
             }
         }
 

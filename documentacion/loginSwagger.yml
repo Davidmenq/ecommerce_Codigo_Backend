@@ -20,4 +20,4 @@ responses:
       properties:
         content:
           type: string
-          example: xxxx.xxx.xxxx
+          example: Json Web Token
