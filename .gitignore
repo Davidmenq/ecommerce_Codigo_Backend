@@ -1,3 +1,6 @@
 entorno*
+<<<<<<< HEAD
 #.env
+=======
+>>>>>>> d96ded947733a02e86b1f74be122df051a1cf536
 *.pyc
