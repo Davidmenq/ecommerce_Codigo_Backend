@@ -12,8 +12,6 @@ from controllers import (RegistrosController ,
                          CategoriasController , 
                          RegistroController,
                          ProductosController, 
-                         SubirImagenController,
-                         DevolverImagenController,
                          CategoriaController,
                          ProductoController,
                          PedidosController,
@@ -80,7 +78,7 @@ api.add_resource(RegistrosController, '/registro')
 api.add_resource(RegistroController, '/registro/<int:id>')
 api.add_resource(LoginController, '/login')
 # api.add_resource(SubirImagenController, '/subir-imagen')
-api.add_resource(DevolverImagenController, '/imagenes/<nombreImagen>')
+# api.add_resource(DevolverImagenController, '/imagenes/<nombreImagen>')
 api.add_resource(ProductosController, '/productos')
 api.add_resource(ProductoController, '/productos/<int:id>')
 api.add_resource(PedidosController, '/pedidos')
