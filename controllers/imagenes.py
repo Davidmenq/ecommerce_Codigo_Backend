@@ -4,22 +4,24 @@ from os import path
 from werkzeug.utils import secure_filename 
 from datetime import datetime
 from flask import send_file
+import boto3
 
 class SubirImagenController(Resource):
 
     # si utilizamos el decorador personalizado y este se ubica en otra posicion del proyecto entonces tendremos que setear el archivo de swagger en la ubicacion de ese decorador
+    @validador_usuario_admin
     def post(self):
-        """
-        file: ../documentacion/subirImagenSwagger.yml
-        """
-        # path.join > sirve para unir varias carpetas y archivos en un formato que pueda ser legible por el sistema operativo
-        # c:\\user\\eduardo > linux
-        # c:/user/eduardo   > ps (windows)
-        # c:\user\eduardo   > cmd (windows)
+        # Conéctate a AWS S3
+        s3 = boto3.client(
+    's3',
+    aws_access_key_id='YOUR_ACCESS_KEY_ID',
+    aws_secret_access_key='YOUR_SECRET_ACCESS_KEY',
+    region_name='YOUR_REGION'
+)
+
         print(request.files.get('imagen'))
         imagen = request.files.get('imagen')
 
-        # https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
         mimetypeValidos = ['image/png', 'image/jpeg', 'image/svg+xml']
 
         if not imagen:
@@ -27,28 +29,34 @@ class SubirImagenController(Resource):
                 'message': 'Se necesita una imagen'
             }, 400
         
-        # validar tipos de archivos
-        print(imagen.filename) # nombre del archivo
-        print(imagen.name) # nombre de la llave de en mi form-data
+        print(imagen.filename)
+        print(imagen.name)
         print(imagen.mimetype)
+        
         if imagen.mimetype not in mimetypeValidos:
             return {
                 'message': 'El archivo solo puede ser .jpg, .png, .svg'
             }, 400
         
-        # extrae el microsegundo de la hora actual
+        # Genera un nombre de archivo único
         id = datetime.now().strftime('%f')
-        # quita algun caracter que pueda generar conflictos al momento de buscar el archivo en el servidor
-        filename = id + secure_filename(imagen.filename) 
+        filename = id + imagen.filename 
 
-        # procedemos con el guardado de la imagen
-        ruta = path.join('imagenes', filename)
-        imagen.save(ruta)
+        try:
+            # Sube la imagen a AWS S3
+            s3.upload_fileobj(imagen, 'bucket1810', filename)
+        except Exception as e:
+            return {
+                'message': 'Error al subir la imagen a AWS S3'
+            }, 500
+
+        # URL de la imagen en S3
+        s3_url = f'https://bucket1810.s3.us-west-2.amazonaws.com/{filename}'
 
         return {
             'message': 'Imagen subida exitosamente',
             'content': {
-                'imagen': f'http://localhost:5000/imagenes/{filename}' 
+                'imagen': s3_url
             }
         }
 

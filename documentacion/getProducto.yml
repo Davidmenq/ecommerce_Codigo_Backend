@@ -1,0 +1,14 @@
+tags:
+  - Producto
+operationId: getProducto
+description: Lista todos los productos
+summary: Devolver los productos
+responses:
+  200:
+    description: Los Productos
+    schema:
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/definitions/Producto'

@@ -1,0 +1,16 @@
+tags:
+    -   "Categoria"
+summary: "Elimina una categoria existente"
+description: "Elimina una categoria existente indicando el ID"
+operationId: "deleteCategoriaId"
+parameters:
+    -   in: "path"
+        name: "id"
+        description: "ID de la categoria"
+        required: true
+
+security:
+  -   Bearer: []
+responses:
+    200:
+        description: Categoria eliminada exitosamente

@@ -6,7 +6,11 @@ from utilitarios import conexion
 
 class ProductosController(Resource):
 
+    @validador_usuario_admin
     def post(self):
+        """
+        file: documentacion/postProducto.yml
+        """
         data = request.get_json()
         dto = ProductoRequestDto()
         try:
@@ -31,6 +35,9 @@ class ProductosController(Resource):
             },400
         
     def get(self):
+        """
+        file: ../documentacion/getProducto.yml
+        """
         # SELECT * FROM productos;
         productoEncontrados  = conexion.session.query(ProductoModel).join(CategoriaModel).all()
         # SELECT productos.id, categorias.id, categoria.nombre FROM productos JOIN categorias ON productos.categoria_id = categorias.id
@@ -48,6 +55,9 @@ class ProductosController(Resource):
     
 class ProductoController(Resource):
     def get(self,id):
+        """
+        file: ../documentacion/getProductoId.yml
+        """
         # SELECT * FROM productos;
         productoEncontrados  = conexion.session.query(ProductoModel).filter_by(id=id).join(CategoriaModel).first()
         # SELECT productos.id, categorias.id, categoria.nombre FROM productos JOIN categorias ON productos.categoria_id = categorias.id
@@ -63,7 +73,11 @@ class ProductoController(Resource):
         dto = ProductoResponseDto()
         return  dto.dump(productoEncontrados)
     
+    @validador_usuario_admin
     def put(self,id):
+        """
+        file: documentacion/putProductoId.yml
+        """
         categoriaEncontrada = conexion.session.query(ProductoModel).filter_by(id=id).first()
         if not categoriaEncontrada:
             return {
@@ -90,7 +104,11 @@ class ProductoController(Resource):
                 'message': 'Error al actualizar el producto',
                 'content': error.args
             }  
+    @validador_usuario_admin
     def delete(self,id):
+        """
+        file: documentacion/deleteProductoId.yml
+        """
         categoriaEncontrada = conexion.session.query(ProductoModel).filter_by(id=id).first()
         if not categoriaEncontrada:
             return {

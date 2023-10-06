@@ -1,24 +1,23 @@
-        Creacion de una categoria
-        ---
-        tags:
-            - Categoria
-        operationId: post_categoria
-        description: Creacion de una nueva categoria con la imagen
-        parameters:
-            - in: body
-              name: body
-              schema:
-                properties:
-                    nombre:
-                        type: string
-                        example: 'Lorem'
-                    imagen:
-                        type: string
-                        example: 'https://www.google.com'
-        security:
-            -   Bearer: []
-        responses:
-            201:
-              description: Categoria creada exitosamente
-              schema:
-                 $ref: '#/definitions/Categoria'
+tags:
+    -   Categoria
+summary: Crea una nueva categoría
+operationId: post_categoria
+description: Creacion de una nueva categoria con la imagen
+parameters:
+    -   in: body
+        name: body
+        schema:
+            properties:
+                nombre:
+                    type: string
+                    example: 'Lorem'
+                imagen:
+                    type: string
+                    example: 'https://www.google.com'
+security:
+    -   Bearer: []
+responses:
+    201:
+        description: Categoria creada exitosamente
+        schema:
+            $ref: '#/definitions/Categoria'

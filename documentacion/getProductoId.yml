@@ -1,0 +1,20 @@
+tags:
+- "Producto"
+summary: "Devuelve un producto"
+description: "Devuelve el producto del ID especificado"
+operationId: "getProductoId"
+parameters:
+- in: "path"
+  name: "id"
+  required: true
+  type: integer
+  schema:
+    type: string
+responses:
+  200:
+    schema:
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/definitions/Producto'

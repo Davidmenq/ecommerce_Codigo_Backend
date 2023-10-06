@@ -35,3 +35,34 @@ def cambiarPassword(destinatario):
     emisor.login(emailEmisor, passwordEmisor)
     emisor.sendmail(from_addr="Technology <" + emailEmisor + ">", to_addrs=destinatario, msg=correo.as_string())
     emisor.quit()
+
+def enviarMensaje(mensaje):
+    nombre=mensaje.get('nombre')
+    apellido=mensaje.get('apellido')
+    empresa=mensaje.get('empresa')
+    email=mensaje.get('email')
+    localidad=mensaje.get('localidad')
+    telefono=mensaje.get('telefono')
+    contenido=mensaje.get('mensaje')
+    politica=mensaje.get('politicas')
+
+    texto = f"""  
+    {nombre} / {apellido} / 
+    {empresa} / {email} / {localidad} / {telefono} / 
+    {contenido} / Estoy de acuerdo con la politica: {politica}
+    """
+
+    emailEmisor = environ.get('EMAIL_EMISOR')
+    passwordEmisor = environ.get('PASSWORD_EMISOR')
+
+    cuerpo = MIMEText(texto, 'html')
+    correo = MIMEMultipart()
+    correo['Subject'] = f'Mensaje enviado desde E-COMMERCE TECHNOLOGY - {nombre} {apellido} '
+    correo['To'] = environ.get('EMAIL_CONTACTO')
+    correo.attach(cuerpo)
+
+    emisor = SMTP('smtp.gmail.com',587)
+    emisor.starttls()
+    emisor.login(emailEmisor, passwordEmisor)
+    emisor.sendmail(from_addr="Technology <" + emailEmisor + ">", to_addrs=environ.get('EMAIL_CONTACTO'), msg=correo.as_string())
+    emisor.quit()

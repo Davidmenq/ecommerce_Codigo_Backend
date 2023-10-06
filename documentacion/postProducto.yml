@@ -1,0 +1,38 @@
+tags:
+    -   Producto
+summary: Crea un nuevo producto
+operationId: post_producto
+description: Creacion de un nuevo producto con la imagen
+parameters:
+    -   in: body
+        name: body
+        schema:
+            properties:
+                categoriaId: 
+                    type: integer
+                    example: 1
+                descripcion:
+                    type: string
+                    example: Este es el detalle del producto
+                disponibilidad:
+                    type: boolean
+                    example: true
+                nombre:
+                    type: string
+                    example: 'Lorem'
+                imagenes:
+                    type: array
+                    example: ['https://www.google.com', 'https://www.google.com']
+                precio:
+                    type: number
+                    example: 30.50
+                stock:
+                    type: integer
+                    example: 10
+security:
+    -   Bearer: []
+responses:
+    201:
+        description: Producto creado exitosamente
+        schema:
+            $ref: '#/definitions/Producto'

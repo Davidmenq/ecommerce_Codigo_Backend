@@ -8,8 +8,10 @@ from dtos import (UsuarioRequestDto,
 from bcrypt import gensalt, hashpw, checkpw
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from mensajeria import cambiarPassword
+from decorators import validador_usuario_admin, validador_usuario_logueado
 
 class RegistrosController(Resource):
+    
     def post(self):
         """
         file: ../documentacion/registroUsuarioSwagger.yml
@@ -55,6 +57,7 @@ class RegistrosController(Resource):
                 'content': e.args
             },400
 
+    
     def get(self):
         usuarios = conexion.session.query(UsuarioModel).all()
         dto = UsuarioResponseDto()
@@ -63,7 +66,11 @@ class RegistrosController(Resource):
     
 
 class RegistroController(Resource):
+    @validador_usuario_admin
     def put(self,id):
+        """
+        file: documentacion/putUsuarioId.yml
+        """
         usuarioEncontrado = conexion.session.query(UsuarioModel).filter_by(id=id).first()
 
         if not usuarioEncontrado:
@@ -87,7 +94,11 @@ class RegistroController(Resource):
                 'content': e.args
             }
     
+    @validador_usuario_admin
     def delete(self,id):
+        """
+        file: documentacion/deleteUsuarioId.yml
+        """
         usuarioEncontrado = conexion.session.query(UsuarioModel).filter_by(id=id).first()
 
         if not usuarioEncontrado:
@@ -171,8 +182,12 @@ class UsuarioController(Resource):
         
 
 class CambiarPasswordController(Resource):
+    @validador_usuario_logueado
     @jwt_required()
     def post(self):
+        """
+        file: documentacion/cambiarPasswordSwagger.yml
+        """
         data = request.get_json()
         dto = CambiarPasswordRequestDto()
         try:

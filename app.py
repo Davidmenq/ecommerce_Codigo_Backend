@@ -18,7 +18,8 @@ from controllers import (RegistrosController ,
                          ProductoController,
                          PedidosController,
                          LoginController, CambiarPasswordController,
-                         PedidosController, LoginController,UsuarioController)
+                         PedidosController,UsuarioController, 
+                         EnviarMensaje)
 
 
 from flask_jwt_extended import JWTManager
@@ -56,7 +57,8 @@ else:
     app.config['SQLALCHEMY_DATABASE_URI'] = urlBd
 
 # servira para firmar las tokens
-app.config['JWT_SECRET_KEY'] = environ.get('JWT_SECRET')
+app.config['JWT_SECRET_KEY'] = "muysecreto"
+app.config["JWT_ALGORITHM"] = "HS256"
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1, minutes=15)
 
 
@@ -72,7 +74,7 @@ conexion.init_app(app)
 Migrate(app, conexion)
 
 # rutas
-api.add_resource(CategoriasController, '/categorias')
+api.add_resource(CategoriasController, '/categorias') 
 api.add_resource(CategoriaController, '/categoria/<int:id>')
 api.add_resource(RegistrosController, '/registro')
 api.add_resource(RegistroController, '/registro/<int:id>')
@@ -84,7 +86,7 @@ api.add_resource(ProductoController, '/productos/<int:id>')
 api.add_resource(PedidosController, '/pedidos')
 api.add_resource(CambiarPasswordController, '/cambiar-contrasena')
 api.add_resource(UsuarioController, '/perfil')
-#api.add_resource
+api.add_resource(EnviarMensaje, '/enviar-mensaje')
 
 
 if __name__ == '__main__':

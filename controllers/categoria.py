@@ -2,17 +2,16 @@ from flask_restful import Resource, request
 from models import CategoriaModel 
 from dtos import CategoriaRequestDto 
 from utilitarios import conexion
-# from decorators import validador_usuario_admin
+from decorators import validador_usuario_admin
 # get_jwt_identity > devolvera la identificacion del usuario de la token
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 class CategoriasController(Resource):
-
-    # @validador_usuario_admin
+    @validador_usuario_admin
     def post(self):
         """
-        file: ../documentacion/postCategoria.yml
+        file: documentacion/postCategoria.yml
         """
         dto = CategoriaRequestDto()
         # identificador = get_jwt_identity()
@@ -46,20 +45,32 @@ class CategoriasController(Resource):
 
         return resultado , 200
     
-class CategoriaController(Resource):    
+class CategoriaController(Resource):   
+    
+    @validador_usuario_admin
     def get(self,id):
+        """
+        file: documentacion/getCategoriaId.yml
+        """
         categoriaEncontrada = conexion.session.query(CategoriaModel).filter_by(id=id).first()
+        
         if not categoriaEncontrada:
             return {
-                 'message': 'El usuario no existe'
+                 'message': 'La categoria no existe'
              }, 404
         dto = CategoriaRequestDto() 
         categoria = dto.dump(categoriaEncontrada)  
 
         return categoria
     
+    @validador_usuario_admin
     def put(self,id):
+        """
+        file: documentacion/putCategoriaId.yml
+        """
+        print(f'Imprime el parametro ID y su tipo: {id} {type(id)}')
         categoriaEncontrada = conexion.session.query(CategoriaModel).filter_by(id=id).first()
+        print(categoriaEncontrada)
         if not categoriaEncontrada:
             return {
                  'message': 'La categoria no existe'
@@ -85,7 +96,12 @@ class CategoriaController(Resource):
                 'message': 'Error al actualizar la categoria',
                 'content': error.args
             }  
+    
+    @validador_usuario_admin
     def delete(self,id):
+        """
+        file: documentacion/deleteCategoriaId.yml
+        """
         categoriaEncontrada = conexion.session.query(CategoriaModel).filter_by(id=id).first()
         if not categoriaEncontrada:
             return {
