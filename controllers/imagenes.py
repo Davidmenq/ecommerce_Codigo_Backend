@@ -6,59 +6,59 @@ from datetime import datetime
 from flask import send_file
 import boto3
 
-class SubirImagenController(Resource):
+# class SubirImagenController(Resource):
 
     # si utilizamos el decorador personalizado y este se ubica en otra posicion del proyecto entonces tendremos que setear el archivo de swagger en la ubicacion de ese decorador
-    @validador_usuario_admin
-    def post(self):
-        # Conéctate a AWS S3
-        s3 = boto3.client(
-    's3',
-    aws_access_key_id='YOUR_ACCESS_KEY_ID',
-    aws_secret_access_key='YOUR_SECRET_ACCESS_KEY',
-    region_name='YOUR_REGION'
-)
+#     @validador_usuario_admin
+#     def post(self):
+#         # Conéctate a AWS S3
+#         s3 = boto3.client(
+#     's3',
+#     aws_access_key_id='YOUR_ACCESS_KEY_ID',
+#     aws_secret_access_key='YOUR_SECRET_ACCESS_KEY',
+#     region_name='YOUR_REGION'
+# )
 
-        print(request.files.get('imagen'))
-        imagen = request.files.get('imagen')
+#         print(request.files.get('imagen'))
+#         imagen = request.files.get('imagen')
 
-        mimetypeValidos = ['image/png', 'image/jpeg', 'image/svg+xml']
+#         mimetypeValidos = ['image/png', 'image/jpeg', 'image/svg+xml']
 
-        if not imagen:
-            return {
-                'message': 'Se necesita una imagen'
-            }, 400
+#         if not imagen:
+#             return {
+#                 'message': 'Se necesita una imagen'
+#             }, 400
         
-        print(imagen.filename)
-        print(imagen.name)
-        print(imagen.mimetype)
+#         print(imagen.filename)
+#         print(imagen.name)
+#         print(imagen.mimetype)
         
-        if imagen.mimetype not in mimetypeValidos:
-            return {
-                'message': 'El archivo solo puede ser .jpg, .png, .svg'
-            }, 400
+#         if imagen.mimetype not in mimetypeValidos:
+#             return {
+#                 'message': 'El archivo solo puede ser .jpg, .png, .svg'
+#             }, 400
         
-        # Genera un nombre de archivo único
-        id = datetime.now().strftime('%f')
-        filename = id + imagen.filename 
+#         # Genera un nombre de archivo único
+#         id = datetime.now().strftime('%f')
+#         filename = id + imagen.filename 
 
-        try:
-            # Sube la imagen a AWS S3
-            s3.upload_fileobj(imagen, 'bucket1810', filename)
-        except Exception as e:
-            return {
-                'message': 'Error al subir la imagen a AWS S3'
-            }, 500
+#         try:
+#             # Sube la imagen a AWS S3
+#             s3.upload_fileobj(imagen, 'bucket1810', filename)
+#         except Exception as e:
+#             return {
+#                 'message': 'Error al subir la imagen a AWS S3'
+#             }, 500
 
-        # URL de la imagen en S3
-        s3_url = f'https://bucket1810.s3.us-west-2.amazonaws.com/{filename}'
+#         # URL de la imagen en S3
+#         s3_url = f'https://bucket1810.s3.us-west-2.amazonaws.com/{filename}'
 
-        return {
-            'message': 'Imagen subida exitosamente',
-            'content': {
-                'imagen': s3_url
-            }
-        }
+#         return {
+#             'message': 'Imagen subida exitosamente',
+#             'content': {
+#                 'imagen': s3_url
+#             }
+#         }
 
 
 class DevolverImagenController(Resource):
