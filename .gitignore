@@ -1,2 +1,3 @@
 entorno*
+#.env
 *.pyc

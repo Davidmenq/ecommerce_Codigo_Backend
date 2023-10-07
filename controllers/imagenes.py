@@ -5,53 +5,59 @@ from werkzeug.utils import secure_filename
 from datetime import datetime
 from flask import send_file
 
-class SubirImagenController(Resource):
+# class SubirImagenController(Resource):
 
     # si utilizamos el decorador personalizado y este se ubica en otra posicion del proyecto entonces tendremos que setear el archivo de swagger en la ubicacion de ese decorador
-    @validador_usuario_admin
-    def post(self):
-        """
-        file: documentacion/subirImagenSwagger.yml
-        """
-        # path.join > sirve para unir varias carpetas y archivos en un formato que pueda ser legible por el sistema operativo
-        # c:\\user\\eduardo > linux
-        # c:/user/eduardo   > ps (windows)
-        # c:\user\eduardo   > cmd (windows)
-        print(request.files.get('imagen'))
-        imagen = request.files.get('imagen')
+#     @validador_usuario_admin
+#     def post(self):
+#         # Conéctate a AWS S3
+#         s3 = boto3.client(
+#     's3',
+#     aws_access_key_id='YOUR_ACCESS_KEY_ID',
+#     aws_secret_access_key='YOUR_SECRET_ACCESS_KEY',
+#     region_name='YOUR_REGION'
+# )
 
-        # https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
-        mimetypeValidos = ['image/png', 'image/jpeg', 'image/svg+xml']
+#         print(request.files.get('imagen'))
+#         imagen = request.files.get('imagen')
 
-        if not imagen:
-            return {
-                'message': 'Se necesita una imagen'
-            }, 400
+#         mimetypeValidos = ['image/png', 'image/jpeg', 'image/svg+xml']
+
+#         if not imagen:
+#             return {
+#                 'message': 'Se necesita una imagen'
+#             }, 400
         
-        # validar tipos de archivos
-        print(imagen.filename) # nombre del archivo
-        print(imagen.name) # nombre de la llave de en mi form-data
-        print(imagen.mimetype)
-        if imagen.mimetype not in mimetypeValidos:
-            return {
-                'message': 'El archivo solo puede ser .jpg, .png, .svg'
-            }, 400
+#         print(imagen.filename)
+#         print(imagen.name)
+#         print(imagen.mimetype)
         
-        # extrae el microsegundo de la hora actual
-        id = datetime.now().strftime('%f')
-        # quita algun caracter que pueda generar conflictos al momento de buscar el archivo en el servidor
-        filename = id + secure_filename(imagen.filename) 
+#         if imagen.mimetype not in mimetypeValidos:
+#             return {
+#                 'message': 'El archivo solo puede ser .jpg, .png, .svg'
+#             }, 400
+        
+#         # Genera un nombre de archivo único
+#         id = datetime.now().strftime('%f')
+#         filename = id + imagen.filename 
 
-        # procedemos con el guardado de la imagen
-        ruta = path.join('imagenes', filename)
-        imagen.save(ruta)
+#         try:
+#             # Sube la imagen a AWS S3
+#             s3.upload_fileobj(imagen, 'bucket1810', filename)
+#         except Exception as e:
+#             return {
+#                 'message': 'Error al subir la imagen a AWS S3'
+#             }, 500
 
-        return {
-            'message': 'Imagen subida exitosamente',
-            'content': {
-                'imagen': f'https://ecommerce-api-backend-nlld.onrender.com/imagenes/{filename}' 
-            }
-        }
+#         # URL de la imagen en S3
+#         s3_url = f'https://bucket1810.s3.us-west-2.amazonaws.com/{filename}'
+
+#         return {
+#             'message': 'Imagen subida exitosamente',
+#             'content': {
+#                 'imagen': s3_url
+#             }
+#         }
 
 
 class DevolverImagenController(Resource):
