@@ -6,3 +6,4 @@ from controllers.pedido import *
 
 #formulario de contacto
 from controllers.contacto import *
+from controllers.recuperarContrasena import *

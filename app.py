@@ -19,7 +19,8 @@ from controllers import (RegistrosController ,
                          PedidosController,
                          LoginController, CambiarPasswordController,
                          PedidosController,UsuarioController, 
-                         EnviarMensaje)
+                         EnviarMensaje,
+                         RecuperarContrasenaController)
 
 
 from flask_jwt_extended import JWTManager
@@ -87,7 +88,7 @@ api.add_resource(PedidosController, '/pedidos')
 api.add_resource(CambiarPasswordController, '/cambiar-contrasena')
 api.add_resource(UsuarioController, '/perfil')
 api.add_resource(EnviarMensaje, '/enviar-mensaje')
-
+api.add_resource(RecuperarContrasenaController, '/recuperar-contrasena')
 
 if __name__ == '__main__':
     app.run(debug=True)

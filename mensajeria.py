@@ -66,3 +66,24 @@ def enviarMensaje(mensaje):
     emisor.login(emailEmisor, passwordEmisor)
     emisor.sendmail(from_addr="Technology <" + emailEmisor + ">", to_addrs=environ.get('EMAIL_CONTACTO'), msg=correo.as_string())
     emisor.quit()
+
+
+def enviarRutaCambiarContrasena(destinatario):
+    enlace = "http://localhost:3000/cambiar-contrasena"  # URL del enlace
+    texto = f"""
+    Usa este <a href="{enlace}">enlace</a> para cambiar tu contraseña. Si no quieres cambiar tu contraseña, ignora este mensaje.
+    """
+    emailEmisor = environ.get('EMAIL_EMISOR')
+    passwordEmisor = environ.get('PASSWORD_EMISOR')
+
+    cuerpo = MIMEText(texto, 'html')
+    correo = MIMEMultipart()
+    correo['Subject'] = 'Recuperar contraseña'
+    correo['To'] = destinatario
+    correo.attach(cuerpo)
+
+    emisor = SMTP('smtp.gmail.com',587)
+    emisor.starttls()
+    emisor.login(emailEmisor, passwordEmisor)
+    emisor.sendmail(from_addr="Technology <" + emailEmisor + ">", to_addrs=destinatario, msg=correo.as_string())
+    emisor.quit()
