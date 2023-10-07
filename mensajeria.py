@@ -69,7 +69,7 @@ def enviarMensaje(mensaje):
 
 
 def enviarRutaCambiarContrasena(destinatario):
-    enlace = "http://localhost:3000/cambiar-contrasena"  # URL del enlace
+    enlace = "https://ecommerce-api-backend-nlld.onrender.com/cambiar-contrasena"  # URL del enlace
     texto = f"""
     Usa este <a href="{enlace}">enlace</a> para cambiar tu contraseña. Si no quieres cambiar tu contraseña, ignora este mensaje.
     """
