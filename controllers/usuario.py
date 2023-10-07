@@ -204,11 +204,12 @@ class CambiarPasswordController(Resource):
                 return {
                     'message': 'La contraseña actual es incorrecta'
                 }, 400
-            nuevaPassword = bytes(dataValidada.get('nuevoPassword'), 'utf-8')
+            nuevaPassword = bytes(dataValidada.get('nuevaPassword'), 'utf-8')
             salt = gensalt()
             hashNuevaPassword = hashpw(nuevaPassword, salt).decode('utf-8')
             usuarioEncontrado.password = hashNuevaPassword
             conexion.session.commit()
+            print(usuarioEncontrado.correo)
             cambiarPassword(usuarioEncontrado.correo)
             return {
                 'message': 'Contraseña actualizada exitosamente'

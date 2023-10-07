@@ -26,9 +26,9 @@ def cambiarPassword(destinatario):
     correo.attach(cuerpo)
 
      # Adjunta la imagen al correo
-    with open(imagen_path, 'rb') as imagen_file:
-        imagen = MIMEImage(imagen_file.read())
-        correo.attach(imagen)
+    # with open(imagen_path, 'rb') as imagen_file:
+    #     imagen = MIMEImage(imagen_file.read())
+    #     correo.attach(imagen)
 
     emisor = SMTP('smtp.gmail.com',587)
     emisor.starttls()

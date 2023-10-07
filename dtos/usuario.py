@@ -25,4 +25,4 @@ class LoginRequestDto(Schema):
 
 class CambiarPasswordRequestDto(Schema):
     password = fields.Str(required=True)
-    nuevoPassword = fields.Str(required=True)
+    nuevaPassword = fields.Str(required=True)
